@@ -1,13 +1,14 @@
-FROM php:8.4-cli
+FROM php:8.4-apache
 
 RUN apt-get update && apt-get install -y \
     git curl zip unzip libzip-dev libonig-dev libxml2-dev \
     libsqlite3-dev sqlite3 pkg-config \
-    && docker-php-ext-install pdo pdo_sqlite mbstring zip xml ctype
+    && docker-php-ext-install pdo pdo_sqlite mbstring zip xml ctype \
+    && a2enmod rewrite
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-WORKDIR /app
+WORKDIR /var/www/html
 
 COPY . .
 
@@ -15,8 +16,12 @@ RUN composer install --no-dev --optimize-autoloader --no-scripts
 
 RUN mkdir -p database && touch database/database.sqlite
 
-RUN chmod -R 777 storage bootstrap/cache
+RUN chmod -R 777 storage bootstrap/cache database
 
-EXPOSE 8000
+RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf
 
-CMD php artisan migrate --force && php artisan serve --host=0.0.0.0 --port=8000
+ENV APACHE_DOCUMENT_ROOT /var/www/html/public
+
+EXPOSE 80
+
+CMD php artisan migrate --force && apache2-foreground
