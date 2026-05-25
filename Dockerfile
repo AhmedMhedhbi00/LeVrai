@@ -4,7 +4,7 @@ RUN apt-get update && apt-get install -y \
     git curl zip unzip libzip-dev libonig-dev libxml2-dev \
     libsqlite3-dev sqlite3 pkg-config \
     && docker-php-ext-install pdo pdo_sqlite mbstring zip xml ctype \
-    && a2enmod rewrite
+    && a2enmod rewrite headers
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
@@ -24,4 +24,4 @@ ENV DB_DATABASE /var/www/html/database/database.sqlite
 
 EXPOSE 80
 
-CMD php artisan migrate --force && apache2-foreground
+CMD php artisan config:clear && php artisan migrate --force && apache2-foreground
