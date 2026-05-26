@@ -304,24 +304,33 @@
 .checkout-modal-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.85);
+    background: rgba(0, 0, 0, 0.6);
     z-index: 9999;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-    backdrop-filter: blur(4px);
+    align-items: stretch;
+    justify-content: flex-end;
+    backdrop-filter: blur(2px);
 }
 
 .checkout-modal {
     background: #fff;
     width: 100%;
-    max-width: 900px;
-    max-height: 90vh;
+    max-width: 520px;
+    height: 100vh;
+    max-height: 100vh;
     overflow-y: auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
     position: relative;
+    animation: slideInRight 0.3s ease;
+}
+yframes slideInRight {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
 }
 
 .modal-close-btn {
@@ -350,8 +359,9 @@
 /* SINISTRA — riepilogo */
 .modal-left {
     background: #f8f8f8;
-    padding: 2.5rem 2rem;
-    border-right: 1px solid #eee;
+    padding: 2.5rem 2rem 1.5rem;
+    border-bottom: 1px solid #eee;
+    border-right: none;
 }
 
 .modal-tag {
@@ -429,10 +439,10 @@
 
 /* DESTRA — pagamento */
 .modal-right {
-    padding: 2.5rem 2rem;
+    padding: 2rem;
     background: #fff;
+    flex: 1;
 }
-
 .payment-message {
     padding: 0.8rem 1rem;
     margin-bottom: 1rem;
@@ -545,18 +555,15 @@
 }
 
 /* RESPONSIVE */
+/* RESPONSIVE mobile */
 @media (max-width: 768px) {
+    .checkout-modal {
+        max-width: 100%;
+    }
     .cart-layout {
         grid-template-columns: 1fr;
     }
     .cart-summary-inner {
         position: static;
-    }
-    .checkout-modal {
-        grid-template-columns: 1fr;
-    }
-    .modal-left {
-        border-right: none;
-        border-bottom: 1px solid #eee;
     }
 }

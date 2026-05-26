@@ -199,7 +199,9 @@ class CheckoutController extends Controller
 
                 return response()->json([
                     'success' => true,
-                    'message' => 'Ordine ricevuto con successo!'
+                    'message' => 'Ordine ricevuto con successo!',
+                    'ordine'  => $ordine->id,
+                    'totale'  => $totaleFinale,
                 ]);
             });
         } catch (\Exception $e) {
