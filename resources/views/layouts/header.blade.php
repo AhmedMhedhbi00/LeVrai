@@ -2,7 +2,7 @@
     <div class="header-container">
 
         <a href="{{ route('home') }}" class="logo">
-            <img src="{{ asset('assets/images/logoW.png') }}" alt="LeVrai" class="logo-img">
+            <img src="{{ asset('assets/images/brandlogo.png') }}" alt="LeVrai" class="logo-img">
         </a>
 
         <nav class="main-nav">
