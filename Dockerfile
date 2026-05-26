@@ -23,6 +23,7 @@ RUN mkdir -p /var/www/html/database && touch /var/www/html/database/database.sql
 RUN chmod -R 777 storage bootstrap/cache /var/www/html/database
 
 ENV DB_DATABASE /var/www/html/database/database.sqlite
+ENV APP_URL=https://levrai-rqq7.onrender.com
 
 EXPOSE 80
 
