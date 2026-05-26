@@ -40,6 +40,25 @@
   </div>
 </div>
 
+{{-- BARRA ELIMINAZIONE MASSIVA (appare solo quando selezioni) --}}
+<div id="bulk-bar" style="display:none;background:#fff1f2;border:1px solid #fca5a5;border-radius:8px;padding:.85rem 1.25rem;margin-bottom:1rem;display:none;align-items:center;gap:1rem;flex-wrap:wrap">
+  <span style="font-size:.85rem;font-weight:600;color:#991b1b">
+    <i class="fas fa-check-square"></i>
+    <span id="bulk-count">0</span> prodotti selezionati
+  </span>
+  <form method="POST" action="{{ route('admin.prodotti.eliminaMassivo') }}" id="bulk-form">
+    @csrf
+    <div id="bulk-inputs"></div>
+    <button type="button" onclick="confirmBulkDelete()"
+      class="adm-btn adm-btn-danger adm-btn-sm">
+      <i class="fas fa-trash"></i> Elimina selezionati
+    </button>
+  </form>
+  <button onclick="deselectAll()" class="adm-btn adm-btn-outline adm-btn-sm">
+    <i class="fas fa-times"></i> Deseleziona tutto
+  </button>
+</div>
+
 <div class="adm-card">
   <div class="adm-card-header">
     <span class="adm-card-title">
@@ -51,6 +70,10 @@
     <table class="adm-table">
       <thead>
         <tr>
+          <th width="40">
+            <input type="checkbox" id="select-all" title="Seleziona tutti"
+              style="width:16px;height:16px;cursor:pointer" onchange="toggleAll(this)">
+          </th>
           <th width="50">#</th>
           <th width="60">Img</th>
           <th>Nome</th>
@@ -66,7 +89,11 @@
       </thead>
       <tbody>
         @forelse($prodotti as $p)
-        <tr>
+        <tr id="row-{{ $p->id }}">
+          <td>
+            <input type="checkbox" class="row-check" value="{{ $p->id }}"
+              style="width:16px;height:16px;cursor:pointer" onchange="updateBulkBar()">
+          </td>
           <td style="color:var(--text-muted);font-size:.75rem">{{ $p->id }}</td>
           <td>
             <img src="{{ asset('assets/images/prodotti/'.($p->immagine ?? 'default.jpg')) }}"
@@ -107,12 +134,10 @@
           </td>
           <td>
             <div style="display:flex;gap:4px;align-items:center">
-              {{-- MODIFICA --}}
               <a href="{{ route('admin.prodotti.modifica', $p->id) }}"
                  class="adm-btn adm-btn-outline adm-btn-sm adm-btn-icon" title="Modifica">
                 <i class="fas fa-edit"></i>
               </a>
-              {{-- ELIMINA: form POST con CSRF --}}
               <form method="POST" action="{{ route('admin.prodotti.elimina', $p->id) }}" style="display:inline"
                     onsubmit="return confirm('Eliminare «{{ addslashes($p->nome) }}»? Questa azione è irreversibile.')">
                 @csrf
@@ -125,7 +150,7 @@
         </tr>
         @empty
         <tr>
-          <td colspan="11" style="text-align:center;padding:3rem;color:var(--text-muted)">
+          <td colspan="12" style="text-align:center;padding:3rem;color:var(--text-muted)">
             <i class="fas fa-box-open" style="font-size:2rem;display:block;margin-bottom:.5rem"></i>
             Nessun prodotto trovato
           </td>
@@ -159,4 +184,52 @@
   </div>
   @endif
 </div>
+
+@push('scripts')
+<script>
+function toggleAll(cb) {
+  document.querySelectorAll('.row-check').forEach(c => c.checked = cb.checked);
+  updateBulkBar();
+}
+
+function deselectAll() {
+  document.querySelectorAll('.row-check').forEach(c => c.checked = false);
+  document.getElementById('select-all').checked = false;
+  updateBulkBar();
+}
+
+function updateBulkBar() {
+  const checked = document.querySelectorAll('.row-check:checked');
+  const bar = document.getElementById('bulk-bar');
+  document.getElementById('bulk-count').textContent = checked.length;
+
+  // Aggiorna gli input nascosti nel form
+  const container = document.getElementById('bulk-inputs');
+  container.innerHTML = '';
+  checked.forEach(c => {
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.name = 'ids[]';
+    input.value = c.value;
+    container.appendChild(input);
+  });
+
+  bar.style.display = checked.length > 0 ? 'flex' : 'none';
+
+  // Aggiorna checkbox "seleziona tutti"
+  const all = document.querySelectorAll('.row-check');
+  document.getElementById('select-all').indeterminate = checked.length > 0 && checked.length < all.length;
+  document.getElementById('select-all').checked = checked.length === all.length;
+}
+
+function confirmBulkDelete() {
+  const count = document.querySelectorAll('.row-check:checked').length;
+  if (count === 0) return;
+  if (confirm(`Sei sicuro di voler eliminare ${count} prodotti? L'azione non è reversibile.`)) {
+    document.getElementById('bulk-form').submit();
+  }
+}
+</script>
+@endpush
+
 @endsection

@@ -46,7 +46,8 @@
       background: var(--bg);
       color: var(--text);
       display: flex;
-      min-height: 100vh
+      min-height: 100vh;
+      overflow-x: hidden;
     }
 
     /* ── SIDEBAR ── */
@@ -737,41 +738,78 @@
       background: #27ae60
     }
 
-    /* ── RESPONSIVE ── */
-    @media(max-width:900px) {
-      .adm-sidebar {
-        transform: translateX(-100%)
-      }
+    /* ── RESPONSIVE ── *//* ── RESPONSIVE ── */
+@media(max-width:900px) {
+  .adm-sidebar {
+    transform: translateX(-100%);
+  }
+  .adm-sidebar.open {
+    transform: translateX(0);
+  }
+  .adm-main {
+    margin-left: 0;
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+  .adm-topbar {
+    padding: 0 1rem;
+  }
+  .adm-content {
+    padding: 1rem;
+    overflow-x: hidden;
+  }
+  .adm-form-grid {
+    grid-template-columns: 1fr;
+  }
+  .adm-form-grid.cols3 {
+    grid-template-columns: 1fr;
+  }
+  .adm-hamburger {
+    display: flex !important;
+  }
+  .adm-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
 
-      .adm-sidebar.open {
-        transform: translateX(0)
-      }
-
-      .adm-main {
-        margin-left: 0
-      }
-
-      .adm-topbar {
-        padding: 0 1rem
-      }
-
-      .adm-content {
-        padding: 1rem
-      }
-
-      .adm-form-grid {
-        grid-template-columns: 1fr
-      }
-
-      .adm-form-grid.cols3 {
-        grid-template-columns: 1fr
-      }
-
-      .adm-hamburger {
-        display: flex !important
-      }
-    }
-
+/* ── MOBILE SMALL ── */
+@media(max-width:480px) {
+  .adm-stats {
+    grid-template-columns: 1fr 1fr;
+    gap: .75rem;
+  }
+  .adm-stat-card {
+    padding: 1rem;
+  }
+  .adm-stat-num {
+    font-size: 1.3rem;
+  }
+  .adm-topbar-title {
+    font-size: .82rem;
+  }
+  .adm-btn-shop span,
+  .adm-user-badge strong {
+    display: none;
+  }
+  .adm-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .adm-table {
+    min-width: 540px;
+  }
+  .adm-toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .adm-search {
+    max-width: 100%;
+  }
+  .adm-card-body {
+    padding: 1rem;
+  }
+}
     .adm-hamburger {
       display: none;
       align-items: center;

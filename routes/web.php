@@ -42,6 +42,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/prodotti/{id}/quantita',       [AdminController::class, 'aggiornaQuantita'])->name('prodotti.quantita');
     Route::get('/ordini',                        [AdminController::class, 'ordini'])->name('ordini');
     Route::post('/ordini/{id}/stato',            [AdminController::class, 'aggiornaStatoOrdine'])->name('ordini.stato');
+    Route::post('/prodotti/elimina-massivo', [AdminController::class, 'eliminaMassivo'])->name('prodotti.eliminaMassivo');
 });
 
 // ── AREA RISERVATA ────────────────────────────────────────────────────

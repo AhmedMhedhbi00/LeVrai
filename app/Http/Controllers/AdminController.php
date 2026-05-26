@@ -259,4 +259,26 @@ class AdminController extends Controller
         $file->move($dest, $filename);
         return $filename;
     }
+    public function eliminaMassivo(Request $request)
+    {
+        $ids = $request->input('ids', []);
+
+        if (empty($ids)) {
+            return redirect()->route('admin.prodotti')->with('error', 'Nessun prodotto selezionato.');
+        }
+
+        $prodotti = Prodotto::whereIn('id', $ids)->get();
+
+        foreach ($prodotti as $p) {
+            // Elimina immagine se esiste
+            $imgPath = public_path('assets/images/prodotti/' . $p->immagine);
+            if ($p->immagine && file_exists($imgPath)) {
+                unlink($imgPath);
+            }
+            $p->delete();
+        }
+
+        return redirect()->route('admin.prodotti')
+            ->with('success', count($ids) . ' prodotti eliminati con successo.');
+    }
 }
