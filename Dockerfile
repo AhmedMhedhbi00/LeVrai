@@ -2,7 +2,7 @@ FROM php:8.4-apache
 
 RUN apt-get update && apt-get install -y \
     git curl zip unzip libzip-dev libonig-dev libxml2-dev \
-    libsqlite3-dev sqlite3 pkg-config \
+    libsqlite3-dev sqlite3 pkg-config nodejs npm \
     && docker-php-ext-install pdo pdo_sqlite mbstring zip xml ctype \
     && a2enmod rewrite headers
 
@@ -15,6 +15,8 @@ COPY . .
 COPY docker/apache.conf /etc/apache2/sites-available/000-default.conf
 
 RUN composer install --no-dev --optimize-autoloader --no-scripts
+
+RUN npm install && npm run build
 
 RUN mkdir -p /var/www/html/database && touch /var/www/html/database/database.sqlite
 
