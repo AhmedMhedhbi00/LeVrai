@@ -1,7 +1,5 @@
 /* ============================================================
-   LEVRAI STREETWEAR — navigazione.js v3.0 FINALE
-   Carrello: Backend Laravel Session
-   Wishlist: localStorage
+   LEVRAI STREETWEAR — navigazione.js v3.0
    ============================================================ */
 
 /* =========================
@@ -1024,7 +1022,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 /* ============================================================
    LEVRAI — SHOP SIDEBAR + FILTRI DINAMICI
-   Sistema unificato, nessun conflitto
 ============================================================ */
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -1434,7 +1431,7 @@ document.addEventListener("DOMContentLoaded", function () {
 // DROP LEVRAI, NON TOCCARE QUESTO FILE SE NON SAI COSA FAI!
 
 // ============================================================
-// LEVRAI STREETWEAR — DROPS COUNTDOWN ENGINE
+//   DROPS COUNTDOWN ENGINE
 // ============================================================
 document.addEventListener("DOMContentLoaded", function () {
     const countdownElement = document.querySelector(".preview-countdown");

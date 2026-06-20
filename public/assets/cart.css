@@ -1,5 +1,5 @@
 /* ============================================================
-   CART PAGE + CHECKOUT MODAL — LeVrai Pro
+   CART PAGE + CHECKOUT MODAL — LeVrai
 ============================================================ */
 .cart-page {
     min-height: 100vh;
@@ -554,7 +554,6 @@ yframes slideInRight {
     letter-spacing: 0.5px;
 }
 
-/* RESPONSIVE */
 /* RESPONSIVE mobile */
 @media (max-width: 768px) {
     .checkout-modal {
