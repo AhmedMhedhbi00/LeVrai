@@ -473,11 +473,11 @@ $dropProdotti = isset($prodottiLeVrai) && $prodottiLeVrai->count() > 0
             <img src="{{ asset('assets/images/logo-nike.png') }}" alt="Nike">
             <img src="{{ asset('assets/images/logo-nocta.png') }}" alt="Nocta">
             <img src="{{ asset('assets/images/Logo_Adidas.png') }}" alt="Adidas">
-            <img src="{{ asset('assets/images/Logo_Air_Jordan.png') }}" alt="Air Jordan">
+            {{-- <img src="{{ asset('assets/images/Logo_Air_Jordan.png') }}" alt="Air Jordan"> --}}
             <img src="{{ asset('assets/images/logo-nike.png') }}" alt="Nike">
             <img src="{{ asset('assets/images/logo-nocta.png') }}" alt="Nocta">
             <img src="{{ asset('assets/images/Logo_Adidas.png') }}" alt="Adidas">
-            <img src="{{ asset('assets/images/Logo_Air_Jordan.png') }}" alt="Air Jordan">
+            {{-- <img src="{{ asset('assets/images/Logo_Air_Jordan.png') }}" alt="Air Jordan"> --}}
         </div>
     </div>
 </section>
